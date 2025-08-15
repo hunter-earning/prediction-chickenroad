@@ -20,7 +20,7 @@ export function BestAppsPage({ apps, onPredictionToolClick }: BestAppsPageProps)
       <header className="header">
         <div className="nav" style={{ width: '100%' }}>
           <div style={{ display: 'grid', placeItems: 'center' }}>
-            <img className="banner-top" src="/images/app-logos/chickenroad-logo.png" alt="Chicken Road" />
+            <img className="banner-top" src="./images/app-logos/chickenroad-logo.png" alt="Chicken Road" />
           </div>
         </div>
       </header>
@@ -36,7 +36,7 @@ export function BestAppsPage({ apps, onPredictionToolClick }: BestAppsPageProps)
             {apps.map((a) => (
               <div key={a.id} className="bestapp-card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <img src={a.logo ?? `/images/app-logos/${a.id}.svg`} alt={a.name} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10 }} />
+                  <img src={a.logo ?? `./images/app-logos/${a.id}.svg`} alt={a.name} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10 }} />
                   <div className="bestapp-info">
                     <div style={{ fontWeight: 800 }}>{a.name}</div>
                     {a.bonusLabel && <div className="pill" style={{ width: 'fit-content', marginTop: 6 }}>{a.bonusLabel}</div>}
@@ -55,7 +55,7 @@ export function BestAppsPage({ apps, onPredictionToolClick }: BestAppsPageProps)
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 0' }}>
             <img 
               className="chicken-static" 
-              src="/images/app-logos/chickenroast.gif" 
+              src="./images/app-logos/chickenroast.gif" 
               alt="Prediction Tool" 
               style={{ width: 120, height: 120, marginBottom: 16 }}
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}

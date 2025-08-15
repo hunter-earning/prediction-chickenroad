@@ -305,7 +305,7 @@ export default function App(): JSX.Element {
             <div className="nav" style={{ width: '100%' }}>
               <button className="hamburger" onClick={() => setDrawerOpen(true)} aria-label="Menu">☰</button>
               <div style={{ display: 'grid', placeItems: 'center' }}>
-                <img className="banner-top" src="/images/app-logos/chickenroad-logo.png" alt="Chicken Road" onError={(e) => {
+                <img className="banner-top" src="./images/app-logos/chickenroad-logo.png" alt="Chicken Road" onError={(e) => {
                   const el = e.currentTarget as HTMLImageElement;
                   el.src = "data:image/svg+xml;utf8," + encodeURIComponent(BANNER_SVG);
                 }} />
@@ -348,7 +348,7 @@ export default function App(): JSX.Element {
                 {predictState === 'thinking' && (
                   <img
                     className="chicken-gif"
-                    src="/images/app-logos/chickenroast.gif"
+                    src="./images/app-logos/chickenroast.gif"
                     alt="Thinking..."
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                   />
@@ -356,9 +356,9 @@ export default function App(): JSX.Element {
                 {predictState === 'idle' && (
                   <img
                     className="chicken-static"
-                    src="/images/app-logos/chicken_road.png"
+                    src="./images/app-logos/chicken_road.png"
                     alt="Chicken"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/app-logos/chicken-road.jpg'; }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = './images/app-logos/chicken-road.jpg'; }}
                   />
                 )}
                 {(predictState === 'thinking' || predictState === 'idle') && (
@@ -437,7 +437,7 @@ export default function App(): JSX.Element {
                     {DEFAULT_APPS.map((a) => (
                       <div key={a.id} className="bestapp-card">
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                          <img src={a.logo ?? `/images/app-logos/${a.id}.svg`} alt={a.name} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10 }} />
+                          <img src={a.logo ?? `./images/app-logos/${a.id}.svg`} alt={a.name} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 10 }} />
                           <div className="bestapp-info">
                             <div style={{ fontWeight: 800 }}>{a.name}</div>
                             <div className="subtle" style={{ fontSize: 12 }}>ID: {a.id}</div>
@@ -542,7 +542,7 @@ function ConnectModal(props: {
               onClick={() => setSelectedLocal(a)}
             >
               <div className="app-logo" style={{ overflow: 'hidden' }}>
-                <img src={a.logo ?? `/images/app-logos/${a.id}.svg`} alt={a.name}
+                <img src={a.logo ?? `./images/app-logos/${a.id}.svg`} alt={a.name}
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                   style={{ width: 28, height: 28, objectFit: 'cover', borderRadius: 6 }} />
                 {a.logoText && <span aria-hidden style={{ fontWeight: 800 }}>{a.logoText}</span>}
