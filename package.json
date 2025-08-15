@@ -1,6 +1,6 @@
 {
   "name": "chicken-road-prediction-tool",
-  "homepage": "https://hunter-earning.github.io/chickenroad-tool/",
+  "homepage": "https://hunter-earning.github.io/prediction-chickenroad/",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -28,4 +28,3 @@
     "gh-pages": "^6.1.1"
   }
 }
-
