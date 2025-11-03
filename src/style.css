@@ -1,0 +1,1509 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  display: block;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Ensure root app container is full-bleed and not constrained by Vite defaults */
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  max-width: none;
+  text-align: initial;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Mobile-first base */
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: #000; color: #fff; }
+
+/* App container fills viewport */
+.app-container {
+  position: relative;
+  width: 100vw;
+  min-height: calc(var(--vh, 1vh) * 100);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Background video - cover entire viewport */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.72);
+  opacity: 0;
+  animation: fadeInVideo 0.5s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes fadeInVideo { to { opacity: 1; } }
+
+/* Foreground content */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* center full stack: heading, logos, buttons */
+  height: 100%;
+  padding: 16px;
+  padding-top: max(24px, env(safe-area-inset-top)); /* equal spacing top/bottom */
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  gap: 16px;
+  text-align: center;
+  opacity: 1; /* ensure content is visible immediately */
+}
+@keyframes showContent { to { opacity: 1; } }
+
+.heading {
+  font-size: clamp(24px, 7vw, 36px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 1.1;
+  margin-top: 50px; /* remove extra top margin to center block */
+  text-shadow: 0 8px 28px rgba(0,0,0,0.55);
+}
+
+/* Logos grid optimized for mobile */
+.logos {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  height: clamp(240px, 45vh, 380px);
+  margin: 0 auto;
+}
+.logo-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 46%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+}
+.logo-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.8 / 1;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.logo-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #fff;
+  opacity: 0.92;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Corner-to-center animations */
+.logo-card.tl { animation: tlMove 0.9s ease-out forwards; animation-delay: 1.6s; }
+.logo-card.tr { animation: trMove 0.9s ease-out forwards; animation-delay: 1.7s; }
+.logo-card.bl { animation: blMove 0.9s ease-out forwards; animation-delay: 1.8s; }
+.logo-card.br { animation: brMove 0.9s ease-out forwards; animation-delay: 1.9s; }
+
+@keyframes tlMove {
+  0% { transform: translate(-250%, -250%); opacity: 0; }
+  100% { transform: translate(-110%, -110%); opacity: 1; }
+}
+@keyframes trMove {
+  0% { transform: translate(150%, -250%); opacity: 0; }
+  100% { transform: translate(10%, -110%); opacity: 1; }
+}
+@keyframes blMove {
+  0% { transform: translate(-250%, 150%); opacity: 0; }
+  100% { transform: translate(-110%, 10%); opacity: 1; }
+}
+@keyframes brMove {
+  0% { transform: translate(150%, 150%); opacity: 0; }
+  100% { transform: translate(10%, 10%); opacity: 1; }
+}
+
+/* Bottom-fixed actions */
+.actions {
+  position: fixed;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom)); /* lift buttons slightly */
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+@media (min-width: 768px) {
+  .logo-title { font-size: 13px; }
+  .logo-card { width: 38%; }
+}
+.logos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.8 / 1; /* tune per asset */
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+/* Buttons - mobile friendly */
+.actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.content .actions {
+  position: static;
+  left: auto;
+  bottom: auto;
+  transform: none;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.btn {
+  padding: 14px 22px; /* larger buttons */
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 16px; /* increase label size */
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn:hover { border-color: rgba(255,255,255,0.4); background: rgba(0,0,0,0.6); }
+.btn.primary { background: rgba(60, 130, 246, 0.9); border-color: rgba(60, 130, 246, 1); }
+.btn.primary:hover { background: rgba(60, 130, 246, 1); }
+.btn.secondary { background: rgba(255,255,255,0.16); }
+
+/* Safe areas for iOS */
+@supports(padding:max(0px)) {
+  .content { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+}
+
+/* Larger screens tweaks */
+@media (min-width: 768px) {
+  .heading { font-size: clamp(28px, 3.4vw, 40px); }
+  .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Modal overlay */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Modal dialog */
+.modal {
+  width: min(92vw, 520px);
+  max-height: 80vh;
+  overflow: auto;
+  background: rgba(20,20,20,0.92);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  padding: 18px 20px;
+  color: #fff;
+}
+.modal h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+.modal-list {
+  margin: 0;
+  padding-left: 18px;
+  text-align: left;
+  line-height: 1.5;
+}
+.modal-list li { margin: 6px 0; }
+.modal-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+
+/* Modal copy refinements */
+.modal-intro {
+  margin: 4px 0 10px 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+.modal-note {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Setup page styles */
+.app-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%; /* ensure it fits inside the setup card */
+  max-width: 560px;
+  margin: 4px auto 8px;
+}
+
+.app-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  border-radius: 14px;
+  background: rgba(18, 22, 28, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.app-option:hover { transform: translateY(-2px); }
+.app-option.selected { border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 8px 34px rgba(0,0,0,0.42); }
+.app-option img { width: 72px; height: 72px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+.app-option .app-name { font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
+
+.form-field {
+  width: 100%; /* ensure it fits inside the setup card */
+  max-width: 560px;
+  margin: 10px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-field label { color: #e8eef7; font-weight: 600; }
+.form-field input {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 0 14px;
+  font-size: 16px;
+  outline: none;
+}
+.form-field input::placeholder { color: rgba(255,255,255,0.7); }
+.field-hint { font-size: 12px; color: rgba(255,255,255,0.75); }
+
+/* Align Next button centered; content already uses .actions styles */
+.content .actions { margin-top: 14px; }
+
+/* Darken background slightly on setup for better readability */
+.bg-video {
+  filter: brightness(0.6); /* was 0.72; darker for readability */
+}
+
+/* Card wrapper for the setup view */
+.setup-card {
+  width: min(560px, 92vw); /* unified width so children never overflow */
+  margin: 0 auto;
+  padding: 18px 16px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  overflow: hidden; /* clip any child overflow to keep it professional */
+}
+.setup-card .heading { margin-bottom: 12px; }
+.app-options { margin-top: 6px; }
+.form-field { margin-top: 12px; }
+.content .actions { margin-top: 16px; }
+
+/* Make app cards more consistent */
+.app-option img { width: 64px; height: 64px; }
+.app-option .app-name { font-size: 14px; }
+
+/* Input visual polish */
+.form-field input {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+.form-field label { font-size: 14px; }
+.field-hint { margin-top: -2px; }
+
+/* Tighten button spacing on small devices */
+@media (max-width: 380px) {
+  .btn { padding: 12px 18px; font-size: 15px; }
+}
+
+/* Selected app + game id summary */
+.selected-app-summary {
+  width: min(560px, 92vw);
+  margin: 8px auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+}
+.selected-app-summary .summary-label { opacity: 0.8; }
+.selected-app-summary .summary-sep { opacity: 0.5; }
+.selected-app-summary .summary-value { font-weight: 700; }
+
+/* Upload sections */
+.upload-grid {
+  width: 100%;
+  margin: 12px 0 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .upload-grid { grid-template-columns: 1fr 1fr; }
+}
+.upload-zone {
+  background: rgba(18, 22, 28, 0.58);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  padding: 12px;
+}
+.upload-label { display: block; font-weight: 800; margin-bottom: 8px; }
+.upload-hint { font-size: 12px; color: rgba(255,255,255,0.75); }
+.image-preview { width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.16); margin: 8px 0; }
+
+.upload-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.form-field.inline { margin: 0; }
+.form-field.inline input { height: 40px; }
+
+/* Validation summary */
+.validation-summary {
+  width: min(560px, 92vw);
+  margin: 10px auto 0;
+  display: grid;
+  gap: 6px;
+}
+.check { font-size: 13px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.06); }
+.check.ok { border-color: rgba(0,200,120,0.55); background: rgba(0,200,120,0.15); }
+.check.fail { border-color: rgba(246, 60, 60, 0.6); background: rgba(246, 60, 60, 0.15); }
+
+/* Buttons spacing on plan view */
+.setup-card .actions { margin-top: 14px; }
+
+/* Plan banner */
+.plan-banner {
+  width: 100%;
+  margin: 6px 0 12px;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* Guide block */
+.guide { width: 100%; margin: 8px 0 12px; text-align: left; }
+.guide-title { margin: 0 0 6px 0; font-size: 16px; font-weight: 800; letter-spacing: 0.4px; }
+.guide-list { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5; }
+.guide-list li { margin: 6px 0; }
+
+/* Mobile fixes: restore large-screen logo placement and animations on mobile */
+@media (max-width: 480px) {
+  .content.home { justify-content: center; }
+  /* Keep original absolute cards + corner animations */
+  .content.home .logos { display: block; height: clamp(220px, 40vh, 340px); position: relative; }
+  .content.home .logo-card { position: absolute; opacity: 0; animation-duration: 0.9s; width: 36%; max-width: 180px; will-change: transform, opacity; }
+  .content.home .logo-title { font-size: 11px; }
+  .content.home .actions { margin-top: 12px; margin-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+
+/* Slightly reduce heading size on narrow devices for better harmony */
+@media (max-width: 380px) {
+  .heading { font-size: clamp(22px, 6.2vw, 32px); }
+}
+
+/* Setup screen: tighten spacing and avoid overflow on small devices */
+@media (max-width: 480px) {
+  .setup-card { padding: 14px 12px; margin-top: 10px; margin-bottom: 10px; }
+  .setup-card .heading { font-size: clamp(20px, 6.2vw, 28px); }
+  .app-option img { width: 56px; height: 56px; }
+  .form-field input { height: 42px; font-size: 15px; }
+  .content .actions { margin-top: 12px; }
+}
+
+/* Home view layout adjustments for equal top/bottom spacing and professional mobile UI */
+.content.home {
+  /* Center the content stack for equal top/bottom space */
+  justify-content: center;
+  min-height: calc(var(--vh, 1vh) * 100);
+  padding-top: max(28px, env(safe-area-inset-top));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+
+/* Ensure heading to buttons spacing scales well on small screens */
+.content.home .heading {
+  margin-top: 0;
+  margin-bottom: 8px; /* slight gap to logos */
+}
+
+/* Keep logos centered block with responsive height */
+.content.home .logos {
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* Bottom actions: use static position within the content block on home */
+.content.home .actions {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 12px;
+}
+
+/* Improve button styling for professional look on mobile */
+.btn.primary, .btn.secondary {
+  padding: 12px 16px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* Reduce visual clutter of logo cards on small devices */
+@media (max-width: 420px) {
+  .logo-card { width: 80%; max-width: 320px; }
+  .logo-card img { border-radius: 8px; }
+}
+
+/* Setup view: vertically center the Select App & Enter Game ID card */
+.content.setup {
+  justify-content: center;
+  height: calc(var(--vh, 1vh) * 100); /* exact viewport height for perfect centering */
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+/* Ensure the access card itself does not add extra margins that break equal spacing */
+.content.setup .setup-card { margin-top: 0; margin-bottom: 0; }
+/* Remove any global heading top margin inside the setup card */
+.content.setup .setup-card .heading { margin-top: 0; }
+
+/* Landing view: mobile-first fixes */
+.content.landing { justify-content: flex-start; padding-top: max(20px, env(safe-area-inset-top)); }
+/* Landing view: center vertically with equal top/bottom spacing over video */
+.content.landing {
+  justify-content: center; /* vertical centering */
+  height: calc(var(--vh, 1vh) * 100); /* exact viewport height */
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+.content.landing .heading { margin-top: 0; margin-bottom: 12px; }
+@media (max-width: 560px) {
+  .content.landing .logos { position: static; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 8px 0; }
+  .content.landing .logo-card { position: static; width: 100%; max-width: none; opacity: 1; transform: none !important; animation: none !important; }
+}
+@media (max-width: 380px) {
+  .content.landing .logos { grid-template-columns: 1fr; }
+}
+.content.landing .logo-card { padding: 8px; }
+
+/* Tool view container centered over video */
+.tool-container { 
+  position: relative; 
+  z-index: 1; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+  min-height: calc(var(--vh, 1vh) * 100); 
+  padding: 16px; 
+  gap: 18px; 
+}
+
+/* Grid of three games */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 900px;
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .tool-grid { grid-template-columns: 1fr; max-width: 520px; }
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.game-logo {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  aspect-ratio: 1.8 / 1;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.game-name {
+  margin-top: 10px;
+  font-size: clamp(16px, 4.5vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+/* Aviator layout */
+.aviator-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  padding: 16px;
+  gap: 16px;
+}
+
+.aviator-header { display: flex; align-items: center; gap: 10px; }
+.aviator-logo { width: 44px; height: 44px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); }
+.aviator-title { font-weight: 800; letter-spacing: 0.6px; }
+
+.aviator-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* left panel and video */
+  gap: 14px;
+  width: 100%;
+  max-width: 980px;
+}
+@media (max-width: 780px) {
+  .aviator-layout { grid-template-columns: 1fr; }
+}
+
+.multiplier-panel {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.multiplier-label { font-size: 13px; opacity: 0.8; }
+.multiplier-display {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+}
+.multiplier-display.running { animation: pulse 800ms ease-in-out infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+
+.predict-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+.prob-note { font-size: 12px; opacity: 0.85; }
+
+.aviator-player-wrapper {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 8px;
+}
+.aviator-player { width: 100%; height: auto; border-radius: 10px; }
+
+.aviator-actions { display: flex; gap: 10px; }
+
+/* Aviator mobile full-screen redesign */
+.aviator-screen {
+  position: relative;
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  background: #000; /* full black */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.aviator-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-top: 20px;
+}
+.aviator-title { font-weight: 800; letter-spacing: 0.6px; }
+
+.aviator-full {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aviator-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 9 / 16; /* portrait-friendly */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aviator-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Left overlay controls */
+.aviator-overlay-left {
+  position: absolute;
+  left: 12px;
+  top: calc(25% + 100px); /* move approx 100px further down */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+.overlay-multiplier {
+  font-size: clamp(28px, 7vw, 40px); /* increased size */
+  font-weight: 900;
+  padding: 10px 12px; /* larger padding */
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+}
+.overlay-multiplier.running { animation: pulse 800ms ease-in-out infinite; }
+.overlay-btn { align-self: flex-start; }
+
+/* Small screens */
+@media (max-width: 480px) {
+  .aviator-overlay-left { left: 10px; top: calc(25% + 100px); }
+  .overlay-multiplier { font-size: clamp(26px, 8vw, 36px); }
+}
+
+/* Landscape tweaks */
+@media (orientation: landscape) {
+  .aviator-video-wrapper { max-width: 1200px; aspect-ratio: 16 / 9; }
+}
+
+/* Chicken Road mobile full-screen redesign */
+.chicken-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000; /* full black */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.chicken-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  margin-top: 40px;
+}
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.mode-indicator { font-weight: 700; opacity: 0.9; }
+.chicken-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.chicken-title { font-weight: 800; font-size: 18px; letter-spacing: 0.6px; }
+
+.chicken-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 20px;
+}
+.chicken-visual { width: 100%; display: flex; justify-content: center; }
+.chicken-image {
+  position: relative; /* allow absolute positioning of indicator */
+  width: min(92vw, 520px); /* slightly smaller than before to decrease image size */
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  transition: transform 250ms ease, opacity 250ms ease;
+  /* Ensure consistent visual size across PNG and GIF */
+  max-height: clamp(200px, 48vh, 340px); /* reduce height to decrease size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Make the inner media (png/gif) fit identically */
+.chicken-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  border-radius: inherit;
+  object-fit: contain;
+}
+/* Position the mode indicator inside the image, top-right with spacing */
+.chicken-image .mode-indicator {
+  position: absolute;
+  top: 80px; /* add 40px margin from top */
+  right: 2px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.chicken-image.animating { transform: scale(1.02); opacity: 0.95; }
+
+.chicken-actions { width: 100%; padding: 0 14px 6px; display: flex; justify-content: center; }
+.chicken-actions .btn { width: auto; }
+
+.chicken-modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; padding: 0 14px; }
+.chicken-modes .btn.selected { border-color: rgba(60,130,246,1); background: rgba(60,130,246,0.18); }
+
+.chicken-output { display: flex; justify-content: center; padding: 6px 14px 2px; }
+.chicken-output-badge {
+  min-width: 160px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 24px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.5);
+}
+.chicken-output-badge.pulse { animation: pulse 800ms ease-in-out; }
+
+/* Small screens tweaks */
+@media (max-width: 480px) {
+  .chicken-logo { width: 34px; height: 34px; }
+  .chicken-title { font-size: 16px; }
+  .chicken-image { width: min(88vw, 420px); max-height: clamp(200px, 48vh, 340px); }
+}
+
+/* Landscape tweaks */
+@media (orientation: landscape) {
+  .chicken-image { width: min(80vw, 680px); max-height: clamp(220px, 60vh, 400px); }
+}
+
+/* Wingo mobile full-screen redesign */
+.wingo-screen {
+  position: relative;
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  background: #000; /* full black */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.wingo-output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 14px 10px;
+}
+.wingo-output-badge {
+  min-width: 160px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 24px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.5);
+}
+.wingo-output-badge.pulse { animation: pulse 800ms ease-in-out; }
+.wingo-output-badge.red { color: #fff; background: linear-gradient(180deg, #a00, #600); border-color: rgba(255,0,0,0.3); }
+.wingo-output-badge.green { color: #fff; background: linear-gradient(180deg, #0a0, #064); border-color: rgba(0,255,0,0.3); }
+.wingo-output-badge.purple { color: #fff; background: linear-gradient(180deg, #70f, #40a); border-color: rgba(128,0,128,0.3); }
+
+.wingo-pattern { padding: 8px 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.pattern-label { font-weight: 700; opacity: 0.95; }
+.wingo-slots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.wingo-slot { height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); }
+.wingo-slot.red { background: linear-gradient(180deg, #a00, #600); }
+.wingo-slot.green { background: linear-gradient(180deg, #0a0, #064); }
+.wingo-slot.purple { background: linear-gradient(180deg, #70f, #40a); }
+
+.wingo-controls { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.btn.red { background: linear-gradient(180deg, #c00, #800); }
+.btn.green { background: linear-gradient(180deg, #0c0, #085); }
+.btn.purple { background: linear-gradient(180deg, #80f, #50b); }
+
+.wingo-actions { padding: 0 14px 24px; }
+.wingo-actions .btn { width: 100%; }
+
+/* Prevent scroll when aviator-screen is active */
+.aviator-screen {
+  position: relative; /* to anchor absolute children */
+  overflow: hidden; /* no up/down scroll */
+}
+.aviator-bottom-actions {
+  position: absolute; /* move Predict button area up */
+  left: 14px;
+  right: 14px;
+  bottom: 25%; /* 25% up from bottom */
+  display: flex;
+  gap: 10px;
+  padding: 0;
+}
+.aviator-bottom-actions .btn { flex: 1; }
+.btn {
+  padding: 14px 22px; /* larger buttons */
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 16px; /* increase label size */
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn:hover { border-color: rgba(255,255,255,0.4); background: rgba(0,0,0,0.6); }
+.btn.primary { background: rgba(60, 130, 246, 0.9); border-color: rgba(60, 130, 246, 1); }
+.btn.primary:hover { background: rgba(60, 130, 246, 1); }
+.btn.secondary { background: rgba(255,255,255,0.16); }
+
+/* Safe areas for iOS */
+@supports(padding:max(0px)) {
+  .content { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+}
+
+/* Larger screens tweaks */
+@media (min-width: 768px) {
+  .heading { font-size: clamp(28px, 3.4vw, 40px); }
+  .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Modal overlay */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Modal dialog */
+.modal {
+  width: min(92vw, 520px);
+  max-height: 80vh;
+  overflow: auto;
+  background: rgba(20,20,20,0.92);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  padding: 18px 20px;
+  color: #fff;
+}
+.modal h2 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+.modal-list {
+  margin: 0;
+  padding-left: 18px;
+  text-align: left;
+  line-height: 1.5;
+}
+.modal-list li { margin: 6px 0; }
+.modal-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+
+/* Modal copy refinements */
+.modal-intro {
+  margin: 4px 0 10px 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+}
+.modal-note {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Setup page styles */
+.app-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%; /* ensure it fits inside the setup card */
+  max-width: 560px;
+  margin: 4px auto 8px;
+}
+
+.app-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  border-radius: 14px;
+  background: rgba(18, 22, 28, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.app-option:hover { transform: translateY(-2px); }
+.app-option.selected { border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 8px 34px rgba(0,0,0,0.42); }
+.app-option img { width: 72px; height: 72px; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+.app-option .app-name { font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
+
+.form-field {
+  width: 100%; /* ensure it fits inside the setup card */
+  max-width: 560px;
+  margin: 10px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-field label { color: #e8eef7; font-weight: 600; }
+.form-field input {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 0 14px;
+  font-size: 16px;
+  outline: none;
+}
+.form-field input::placeholder { color: rgba(255,255,255,0.7); }
+.field-hint { font-size: 12px; color: rgba(255,255,255,0.75); }
+
+/* Align Next button centered; content already uses .actions styles */
+.content .actions { margin-top: 14px; }
+
+/* Darken background slightly on setup for better readability */
+.bg-video {
+  filter: brightness(0.6); /* was 0.72; darker for readability */
+}
+
+/* Card wrapper for the setup view */
+.setup-card {
+  width: min(560px, 92vw); /* unified width so children never overflow */
+  margin: 0 auto;
+  padding: 18px 16px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  overflow: hidden; /* clip any child overflow to keep it professional */
+}
+.setup-card .heading { margin-bottom: 12px; }
+.app-options { margin-top: 6px; }
+.form-field { margin-top: 12px; }
+.content .actions { margin-top: 16px; }
+
+/* Make app cards more consistent */
+.app-option img { width: 64px; height: 64px; }
+.app-option .app-name { font-size: 14px; }
+
+/* Input visual polish */
+.form-field input {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+.form-field label { font-size: 14px; }
+.field-hint { margin-top: -2px; }
+
+/* Tighten button spacing on small devices */
+@media (max-width: 380px) {
+  .btn { padding: 12px 18px; font-size: 15px; }
+}
+
+/* Selected app + game id summary */
+.selected-app-summary {
+  width: min(560px, 92vw);
+  margin: 8px auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+}
+.selected-app-summary .summary-label { opacity: 0.8; }
+.selected-app-summary .summary-sep { opacity: 0.5; }
+.selected-app-summary .summary-value { font-weight: 700; }
+
+/* Upload sections */
+.upload-grid {
+  width: 100%;
+  margin: 12px 0 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .upload-grid { grid-template-columns: 1fr 1fr; }
+}
+.upload-zone {
+  background: rgba(18, 22, 28, 0.58);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  padding: 12px;
+}
+.upload-label { display: block; font-weight: 800; margin-bottom: 8px; }
+.upload-hint { font-size: 12px; color: rgba(255,255,255,0.75); }
+.image-preview { width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.16); margin: 8px 0; }
+
+.upload-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.form-field.inline { margin: 0; }
+.form-field.inline input { height: 40px; }
+
+/* Validation summary */
+.validation-summary {
+  width: min(560px, 92vw);
+  margin: 10px auto 0;
+  display: grid;
+  gap: 6px;
+}
+.check { font-size: 13px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.06); }
+.check.ok { border-color: rgba(0,200,120,0.55); background: rgba(0,200,120,0.15); }
+.check.fail { border-color: rgba(246, 60, 60, 0.6); background: rgba(246, 60, 60, 0.15); }
+
+/* Buttons spacing on plan view */
+.setup-card .actions { margin-top: 14px; }
+
+/* Plan banner */
+.plan-banner {
+  width: 100%;
+  margin: 6px 0 12px;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* Guide block */
+.guide { width: 100%; margin: 8px 0 12px; text-align: left; }
+.guide-title { margin: 0 0 6px 0; font-size: 16px; font-weight: 800; letter-spacing: 0.4px; }
+.guide-list { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5; }
+.guide-list li { margin: 6px 0; }
+
+/* Mobile fixes: restore large-screen logo placement and animations on mobile */
+@media (max-width: 480px) {
+  .content.home { justify-content: center; }
+  /* Keep original absolute cards + corner animations */
+  .content.home .logos { display: block; height: clamp(220px, 40vh, 340px); position: relative; }
+  .content.home .logo-card { position: absolute; opacity: 0; animation-duration: 0.9s; width: 36%; max-width: 180px; will-change: transform, opacity; }
+  .content.home .logo-title { font-size: 11px; }
+  .content.home .actions { margin-top: 12px; margin-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+
+/* Slightly reduce heading size on narrow devices for better harmony */
+@media (max-width: 380px) {
+  .heading { font-size: clamp(22px, 6.2vw, 32px); }
+}
+
+/* Setup screen: tighten spacing and avoid overflow on small devices */
+@media (max-width: 480px) {
+  .setup-card { padding: 14px 12px; margin-top: 10px; margin-bottom: 10px; }
+  .setup-card .heading { font-size: clamp(20px, 6.2vw, 28px); }
+  .app-option img { width: 56px; height: 56px; }
+  .form-field input { height: 42px; font-size: 15px; }
+  .content .actions { margin-top: 12px; }
+}
+
+/* Home view layout adjustments for equal top/bottom spacing and professional mobile UI */
+.content.home {
+  /* Center the content stack for equal top/bottom space */
+  justify-content: center;
+  min-height: calc(var(--vh, 1vh) * 100);
+  padding-top: max(28px, env(safe-area-inset-top));
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+
+/* Ensure heading to buttons spacing scales well on small screens */
+.content.home .heading {
+  margin-top: 0;
+  margin-bottom: 8px; /* slight gap to logos */
+}
+
+/* Keep logos centered block with responsive height */
+.content.home .logos {
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* Bottom actions: use static position within the content block on home */
+.content.home .actions {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 12px;
+}
+
+/* Improve button styling for professional look on mobile */
+.btn.primary, .btn.secondary {
+  padding: 12px 16px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* Reduce visual clutter of logo cards on small devices */
+@media (max-width: 420px) {
+  .logo-card { width: 80%; max-width: 320px; }
+  .logo-card img { border-radius: 8px; }
+}
+
+/* Setup view: vertically center the Select App & Enter Game ID card */
+.content.setup {
+  justify-content: center;
+  height: calc(var(--vh, 1vh) * 100); /* exact viewport height for perfect centering */
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+/* Ensure the access card itself does not add extra margins that break equal spacing */
+.content.setup .setup-card { margin-top: 0; margin-bottom: 0; }
+/* Remove any global heading top margin inside the setup card */
+.content.setup .setup-card .heading { margin-top: 0; }
+
+/* Landing view: mobile-first fixes */
+.content.landing { justify-content: flex-start; padding-top: max(20px, env(safe-area-inset-top)); }
+/* Landing view: center vertically with equal top/bottom spacing over video */
+.content.landing {
+  justify-content: center; /* vertical centering */
+  height: calc(var(--vh, 1vh) * 100); /* exact viewport height */
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+.content.landing .heading { margin-top: 0; margin-bottom: 12px; }
+@media (max-width: 560px) {
+  .content.landing .logos { position: static; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 8px 0; }
+  .content.landing .logo-card { position: static; width: 100%; max-width: none; opacity: 1; transform: none !important; animation: none !important; }
+}
+@media (max-width: 380px) {
+  .content.landing .logos { grid-template-columns: 1fr; }
+}
+.content.landing .logo-card { padding: 8px; }
+
+/* Tool view container centered over video */
+.tool-container { 
+  position: relative; 
+  z-index: 1; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+  min-height: calc(var(--vh, 1vh) * 100); 
+  padding: 16px; 
+  gap: 18px; 
+}
+
+/* Grid of three games */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 900px;
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .tool-grid { grid-template-columns: 1fr; max-width: 520px; }
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.game-logo {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  aspect-ratio: 1.8 / 1;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.game-name {
+  margin-top: 10px;
+  font-size: clamp(16px, 4.5vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+/* Aviator layout */
+.aviator-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  padding: 16px;
+  gap: 16px;
+}
+
+.aviator-header { display: flex; align-items: center; gap: 10px; }
+.aviator-logo { width: 44px; height: 44px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); }
+.aviator-title { font-weight: 800; letter-spacing: 0.6px; }
+
+.aviator-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* left panel and video */
+  gap: 14px;
+  width: 100%;
+  max-width: 980px;
+}
+@media (max-width: 780px) {
+  .aviator-layout { grid-template-columns: 1fr; }
+}
+
+.multiplier-panel {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.multiplier-label { font-size: 13px; opacity: 0.8; }
+.multiplier-display {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+}
+.multiplier-display.running { animation: pulse 800ms ease-in-out infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+
+.predict-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+.prob-note { font-size: 12px; opacity: 0.85; }
+
+.aviator-player-wrapper {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 8px;
+}
+.aviator-player { width: 100%; height: auto; border-radius: 10px; }
+
+.aviator-actions { display: flex; gap: 10px; }
+
+/* Aviator mobile full-screen redesign */
+.aviator-screen {
+  position: relative;
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  background: #000; /* full black */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.aviator-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-top: 20px;
+}
+.aviator-title { font-weight: 800; letter-spacing: 0.6px; }
+
+.aviator-full {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aviator-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 9 / 16; /* portrait-friendly */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aviator-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Left overlay controls */
+.aviator-overlay-left {
+  position: absolute;
+  left: 12px;
+  top: calc(25% + 100px); /* move approx 100px further down */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+.overlay-multiplier {
+  font-size: clamp(28px, 7vw, 40px); /* increased size */
+  font-weight: 900;
+  padding: 10px 12px; /* larger padding */
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+}
+.overlay-multiplier.running { animation: pulse 800ms ease-in-out infinite; }
+.overlay-btn { align-self: flex-start; }
+
+/* Small screens */
+@media (max-width: 480px) {
+  .aviator-overlay-left { left: 10px; top: calc(25% + 100px); }
+  .overlay-multiplier { font-size: clamp(26px, 8vw, 36px); }
+}
+
+/* Landscape tweaks */
+@media (orientation: landscape) {
+  .aviator-video-wrapper { max-width: 1200px; aspect-ratio: 16 / 9; }
+}

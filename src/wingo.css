@@ -1,0 +1,24 @@
+/* Wingo topbar and centered body */
+.wingo-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  margin-top: 40px;
+}
+.wingo-topbar .topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wingo-logo { width: 36px; height: 36px; object-fit: cover; border-radius: 6px; }
+.wingo-title { font-weight: 800; font-size: 18px; }
+.wingo-output { margin-top: 60px; }
+.wingo-pattern { margin-top: 60px; }
+.wingo-controls { margin-top: 60px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wingo-actions { margin-top: 20px; display: flex; justify-content: center; }
+.wingo-actions .btn { width: auto; }
+.wingo-actions .btn.primary { padding: 18px 28px; font-size: 18px; border-radius: 14px; }
+.wingo-body { width: 100%; max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; }
+
+@media (max-width: 480px) { .wingo-body { max-width: 100%; } }

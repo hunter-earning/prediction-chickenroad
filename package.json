@@ -1,0 +1,31 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "server": "node server/index.cjs",
+    "start": "node server/index.cjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:api": "set VITE_API_BASE=http://192.168.1.5:4000&& vite build",
+    "build:api:prod": "set VITE_API_BASE=%PUBLIC_API_BASE%&& vite build"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tesseract.js": "^6.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.7"
+  }
+}
